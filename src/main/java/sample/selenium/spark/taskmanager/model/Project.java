@@ -13,12 +13,28 @@ public class Project {
 	private Timestamp created_at;
 	private Timestamp updated_at;
 
+	public Project() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Project(String name) {
+		this.title = name;
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Timestamp getCreated_at() {
@@ -37,25 +53,9 @@ public class Project {
 		this.updated_at = updated_at;
 	}
 
-	public Project(String name) {
-		this.title = name;
-	}
-
-	public Project() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public String toString() {
 		return "Project [name=" + title + "]";
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 }
