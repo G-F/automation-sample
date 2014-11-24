@@ -28,4 +28,22 @@ public class TasksDao extends AbstractDao {
 		return results;
 	}
 
+	public void insert(Task task) {
+		QueryRunner queryRunner = new QueryRunner();
+
+		try {
+			queryRunner
+					.update(dbConnectionManager.open(),
+							"insert into tasks(title,project_id,created_at,updated_at) values(?,?,?,?)",
+							task.getTitle(), task.getProject_id(),
+							task.getCreated_at().getTime(), task.getUpdated_at());
+		} catch (SQLException | DBConnectionManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			dbConnectionManager.close();
+		}
+
+	}
+
 }

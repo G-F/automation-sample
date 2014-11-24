@@ -9,6 +9,16 @@ public class Task {
 	private int project_id;
 	private Timestamp created_at;
 	private Timestamp updated_at;
+	
+	public Task() {
+	}
+	
+	public Task(int project_id, String title) {
+		this.project_id = project_id;
+		this.title = title;
+		this.created_at = new Timestamp(System.currentTimeMillis());
+		this.updated_at = new Timestamp(System.currentTimeMillis());
+	}
 	public int getId() {
 		return id;
 	}

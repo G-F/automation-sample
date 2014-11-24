@@ -13,8 +13,8 @@
     #foreach($project in $projects)
         <li>
             <a href="/project/$project.getId()">$project.getTitle()
-            <a href="/"> Edit</a>
-            <a href="/"> delete</a>
+            <a href="/"> [Edit]</a>
+            <a href="/"> [delete]</a>
         </li>
     #end
 </ul>
