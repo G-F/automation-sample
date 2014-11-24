@@ -43,9 +43,9 @@ public class SampleTaskManager {
 			System.out.println(project.getTitle());
 			
 			model.put("project", project);
-			model.put("hello", "HELLO");
 			List<Task> tasks = tasksDao.getTasksByProjectId(id);
-			//model.put("tasks", tasks);
+			System.out.println(tasks.get(0).getTitle());
+			model.put("tasks", tasks);
 			return new ModelAndView(model, "/projects/project.vm");
 		},new VelocityTemplateEngine());
 
