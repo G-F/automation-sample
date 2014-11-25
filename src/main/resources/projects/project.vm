@@ -5,8 +5,8 @@
         <li>
             <input type="checkbox" />
             $task.getTitle()
-            <a href="/"> [Delete] </a>
-            <!-- ƒŠƒ“ƒN‚ðƒNƒŠƒbƒN‚µ‚½‚Æ‚«‚Éƒ_ƒCƒAƒƒO‚ðo‚·‚Ì‚Íjavascript‚ÅŽÀ‘•‚·‚é-->
+                <a href="/project/$project.getId()/task/$task.getId()/delete"> [Delete] </a>
+            <!-- ãƒªãƒ³ã‚¯ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸã¨ãã«ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’å‡ºã™ã®ã¯javascriptã§å®Ÿè£…ã™ã‚‹-->
         </li>
     #end
     <li>
@@ -27,7 +27,7 @@
 </li>
 <% end %>
 
-<!-- ƒ^ƒXƒN‚ÌV‹Kì¬ƒ{ƒ^ƒ“‚ðì‚é‚Æ‚±‚ë(ƒ^ƒCƒgƒ‹‚ð‹L“ü‚·‚é‚Æ‚Å‚«‚é) -->
+<!-- ã‚¿ã‚¹ã‚¯ã®æ–°è¦ä½œæˆãƒœã‚¿ãƒ³ã‚’ä½œã‚‹ã¨ã“ã‚(ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¨˜å…¥ã™ã‚‹ã¨ã§ãã‚‹) -->
 <li>
     <%= form_for [@project, @project.tasks.build] do |f| %>
     <%= f.text_field :title %>

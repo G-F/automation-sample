@@ -21,8 +21,8 @@ public class SampleTaskManager {
 
 	public static void main(String[] args) {
 
-		// FIXME ‚±‚±‚Å‚ÍƒvƒƒWƒFƒNƒg‚Ìƒ^ƒCƒgƒ‹‚¾‚¯æ“¾‚·‚é•û‚ª‚æ‚¢‚©‚à
-		// ƒgƒbƒv‰æ–Ê(ƒvƒƒWƒFƒNƒgˆê——)‚ğ•\¦‚·‚é
+		// FIXME ã“ã“ã§ã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã ã‘å–å¾—ã™ã‚‹æ–¹ãŒã‚ˆã„ã‹ã‚‚
+		// ãƒˆãƒƒãƒ—ç”»é¢(ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆä¸€è¦§)ã‚’è¡¨ç¤ºã™ã‚‹
 		get("/", (req, res) -> {
 			List<Project> projects;
 			projects = projectsDao.getAllProjects();
@@ -31,13 +31,13 @@ public class SampleTaskManager {
 			return new ModelAndView(model, "/projects/index.vm");
 		}, new VelocityTemplateEngine());
 
-		// ƒvƒƒWƒFƒNƒg‚Ì‰æ–Ê‚ğ•\¦‚·‚éBƒpƒ‰ƒ[ƒ^‚ÍƒvƒƒWƒFƒNƒgid
+		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹ã€‚ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆid
 		get("/project/:id", (req, res) -> {
 			HashMap<String, Object> model = new HashMap<String, Object>();
-			// ƒpƒ‰ƒ[ƒ^‚ğæ“¾
+			// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—
 				String id = req.params(":id");
 
-				// ƒpƒ‰ƒ[ƒ^‚©‚çƒvƒƒWƒFƒNƒg‚ğæ“¾
+				// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
 				Project project = projectsDao.getProjectbyId(id);
 				if (project == null) {
 					throw new NotFoundException();
@@ -67,9 +67,10 @@ public class SampleTaskManager {
 			return new ModelAndView(model, "test/hello2.vm");
 		}, new VelocityTemplateEngine());
 
+		//taskã‚’æ–°è¦ä½œæˆã™ã‚‹
 		post("/project/:id/newtask",
 				(req, res) -> {
-					// V‚µ‚¢ƒ^ƒXƒN‚ğì‚Á‚ÄƒŠƒ_ƒCƒŒƒNƒg‚·‚ê‚Î‚æ‚¢
+					// æ–°ã—ã„ã‚¿ã‚¹ã‚¯ã‚’ä½œã£ã¦ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã™ã‚Œã°ã‚ˆã„
 					Task task = new Task(Integer.parseInt(req.params("id")),
 							req.queryParams("title"));
 
@@ -77,6 +78,12 @@ public class SampleTaskManager {
 					res.redirect("/project/" + req.params("id"));
 					return null;
 				});
+		
+		//FIXME æœ¬å½“ã¯deleteãƒ¡ã‚½ãƒƒãƒ‰ã§ä½œæˆã—ãŸã„ã€‚ãã®å ´åˆã®ãƒ‘ã‚¹ã¯/project/:projectId/task/:taskId
+		get("/project/:projectId/task/:taskId/delete", (req,res) ->{
+			System.out.println("get call dell");
+			return "success";
+		});
 
 		exception(NotFoundException.class, (e, req, res) -> {
 			res.status(404);
