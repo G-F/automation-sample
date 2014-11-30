@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
+
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
@@ -31,19 +33,39 @@ public class SampleTaskManager {
 			return new ModelAndView(model, "/projects/index.vm");
 		}, new VelocityTemplateEngine());
 
+		get("/project/new", (req, res) -> {
+			// FIXME project/:idより前に書く必要あり⇒解決策ない?
+			// FIXME モデル渡す必要ないなら静的ファイルに送ってもよいかも
+				return new ModelAndView(new HashMap<String, Object>(),
+						"/projects/new.vm");
+			}, new VelocityTemplateEngine());
+
+		// 新しいプロジェクトを作成する
+		post("project/create", (req, res) -> {
+
+			projectsDao.insertByTitle(req.queryParams("title"));
+			res.redirect("/");
+			return null;
+		});
+
+		// 既存のプロジェクトを編集する
+		get("/project/:id/edit", (req, res) -> {
+			Project project = projectsDao.getProjectbyId(req.params(":id"));
+			HashMap<String,Object> model = makeProjectModel(project);
+			
+			return new ModelAndView(model, "/projects/edit.vm");
+		}, new VelocityTemplateEngine());
+
+		// 既存のプロジェクトを削除する
+
 		// プロジェクトの画面を表示する。パラメータはプロジェクトid
 		get("/project/:id", (req, res) -> {
-			HashMap<String, Object> model = new HashMap<String, Object>();
-			// パラメータを取得
+			   // パラメータを取得
 				String id = req.params(":id");
-
 				// パラメータからプロジェクトを取得
 				Project project = projectsDao.getProjectbyId(id);
-				if (project == null) {
-					throw new NotFoundException();
-				}
-
-				model.put("project", project);
+				
+				HashMap<String,Object> model = makeProjectModel(project);
 				List<Task> tasks = tasksDao.getTasksByProjectId(id);
 				model.put("tasks", tasks);
 				return new ModelAndView(model, "/projects/project.vm");
@@ -55,19 +77,7 @@ public class SampleTaskManager {
 			return "Hello World";
 		});
 
-		get("/template", (req, res) -> {
-			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("hello", "Hello World");
-			return new ModelAndView(model, "hello.wm");
-		}, new VelocityTemplateEngine());
-
-		get("/template2", (req, res) -> {
-			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("hello", "Hello World");
-			return new ModelAndView(model, "test/hello2.vm");
-		}, new VelocityTemplateEngine());
-
-		//taskを新規作成する
+		// taskを新規作成する
 		post("/project/:id/newtask",
 				(req, res) -> {
 					// 新しいタスクを作ってリダイレクトすればよい
@@ -78,11 +88,15 @@ public class SampleTaskManager {
 					res.redirect("/project/" + req.params("id"));
 					return null;
 				});
-		
-		//FIXME 本当はdeleteメソッドで作成したい。その場合のパスは/project/:projectId/task/:taskId
-		get("/project/:projectId/task/:taskId/delete", (req,res) ->{
-			System.out.println("get call dell");
-			return "success";
+
+		// FIXME 本当はdeleteメソッドで作成したい。その場合のパスは/project/:projectId/task/:taskId
+		// タスクを削除する
+		get("/project/:projectId/task/:taskId/delete", (req, res) -> {
+
+			tasksDao.deleteByID(Integer.parseInt(req.params("taskId")));
+
+			res.redirect("/project/" + req.params("projectId"));
+			return null;
 		});
 
 		exception(NotFoundException.class, (e, req, res) -> {
@@ -96,4 +110,19 @@ public class SampleTaskManager {
 			stop();
 		});
 	}
+
+	//FIXME この下のメソッドはクラスに切り分けたい
+	private static HashMap<String, Object> makeProjectModel(Project project) {
+		HashMap<String, Object> model = new HashMap<String, Object>();
+		makeProjectModel(project, model);
+		return model;
+	}
+
+	private static void makeProjectModel(Project project, HashMap<String, Object> model) {
+		if (project == null) {
+			throw new NotFoundException();
+		}
+		model.put("project", project);
+	}
+
 }

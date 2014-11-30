@@ -12,13 +12,14 @@
     
     #foreach($project in $projects)
         <li>
-            <a href="/project/$project.getId()">$project.getTitle()
+            <a href="/project/$project.getId()">$project.getTitle()</a>
             <a href="/"> [Edit]</a>
             <a href="/"> [delete]</a>
         </li>
     #end
 </ul>
 
+<a href="/project/new">Add New</a>
 <p><%= link_to "Add New", new_project_path %></p>
 
     #foreach($item in [1..3])

@@ -35,14 +35,35 @@ public class TasksDao extends AbstractDao {
 			queryRunner
 					.update(dbConnectionManager.open(),
 							"insert into tasks(title,project_id,created_at,updated_at) values(?,?,?,?)",
-							task.getTitle(), task.getProject_id(),
-							task.getCreated_at().getTime(), task.getUpdated_at());
+							task.getTitle(), task.getProject_id(), task
+									.getCreated_at().getTime(), task
+									.getUpdated_at());
 		} catch (SQLException | DBConnectionManagerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
+		} finally {
 			dbConnectionManager.close();
 		}
+
+	}
+
+	/**
+	 * タスクIDを取得して対象のタスクを削除する
+	 * 
+	 * @param params
+	 */
+	public void deleteByID(int taskID) {
+		QueryRunner queryRunner = new QueryRunner();
+
+		try {
+			queryRunner.update(dbConnectionManager.open(),
+					"delete from tasks where id = ? ", taskID);
+		} catch (SQLException | DBConnectionManagerException e) {
+			e.printStackTrace();
+		} finally {
+			dbConnectionManager.close();
+		}
+		//FIXME queryRunnerの返り値をチェックした方がよいかも
 
 	}
 

@@ -6,7 +6,7 @@ public class Project {
 
 	private int id;
 	/**
-	 * プロジェクトの名前
+	 * 繝励Ο繧ｸ繧ｧ繧ｯ繝医�ｮ鬘悟錐
 	 */
 	private String title;
 
