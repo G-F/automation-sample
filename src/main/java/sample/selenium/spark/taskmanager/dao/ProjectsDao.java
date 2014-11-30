@@ -9,7 +9,6 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import sample.selenium.dbutils.DBConnectionManager.DBConnectionManagerException;
 import sample.selenium.spark.taskmanager.model.Project;
-import sample.selenium.spark.taskmanager.model.Task;
 
 public class ProjectsDao extends AbstractDao {
 	/**
@@ -59,6 +58,21 @@ public class ProjectsDao extends AbstractDao {
 		try {
 			queryRunner.update(dbConnectionManager.open(),
 					"insert into projects(title) values(?)", title);
+		} catch (SQLException | DBConnectionManagerException e) {
+			e.printStackTrace();
+		} finally {
+			dbConnectionManager.close();
+		}
+
+	}
+
+	public void updateTitleByID(String id, String title) {
+
+		QueryRunner queryRunner = new QueryRunner();
+
+		try {
+			queryRunner.update(dbConnectionManager.open(),
+					"update projects set title = ? where id = ?", title, id);
 		} catch (SQLException | DBConnectionManagerException e) {
 			e.printStackTrace();
 		} finally {

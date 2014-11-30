@@ -8,11 +8,11 @@ import sample.selenium.spark.taskmanager.exception.NotFoundException;
 import sample.selenium.spark.taskmanager.model.Project;
 import sample.selenium.spark.taskmanager.model.Task;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
 
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
@@ -48,24 +48,31 @@ public class SampleTaskManager {
 			return null;
 		});
 
-		// 既存のプロジェクトを編集する
+		// 既存のプロジェクトの編集画面へ遷移する
 		get("/project/:id/edit", (req, res) -> {
 			Project project = projectsDao.getProjectbyId(req.params(":id"));
-			HashMap<String,Object> model = makeProjectModel(project);
-			
+			HashMap<String, Object> model = makeProjectModel(project);
+
 			return new ModelAndView(model, "/projects/edit.vm");
 		}, new VelocityTemplateEngine());
+
+		//プロジェクトを更新する
+		post("/project/:id/update", (req, res) -> {
+			projectsDao.updateTitleByID(req.params(":id"),req.queryParams("title"));
+			res.redirect("/");
+			return null;
+		});
 
 		// 既存のプロジェクトを削除する
 
 		// プロジェクトの画面を表示する。パラメータはプロジェクトid
 		get("/project/:id", (req, res) -> {
-			   // パラメータを取得
+			// パラメータを取得
 				String id = req.params(":id");
 				// パラメータからプロジェクトを取得
 				Project project = projectsDao.getProjectbyId(id);
-				
-				HashMap<String,Object> model = makeProjectModel(project);
+
+				HashMap<String, Object> model = makeProjectModel(project);
 				List<Task> tasks = tasksDao.getTasksByProjectId(id);
 				model.put("tasks", tasks);
 				return new ModelAndView(model, "/projects/project.vm");
@@ -111,14 +118,15 @@ public class SampleTaskManager {
 		});
 	}
 
-	//FIXME この下のメソッドはクラスに切り分けたい
+	// FIXME この下のメソッドはクラスに切り分けたい
 	private static HashMap<String, Object> makeProjectModel(Project project) {
 		HashMap<String, Object> model = new HashMap<String, Object>();
 		makeProjectModel(project, model);
 		return model;
 	}
 
-	private static void makeProjectModel(Project project, HashMap<String, Object> model) {
+	private static void makeProjectModel(Project project,
+			HashMap<String, Object> model) {
 		if (project == null) {
 			throw new NotFoundException();
 		}
