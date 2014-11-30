@@ -64,6 +64,12 @@ public class SampleTaskManager {
 		});
 
 		// 既存のプロジェクトを削除する
+		get("/project/:id/delete",(req,res) -> {
+			projectsDao.deleteById(req.params(":id"));
+			tasksDao.deleteByProjectId(req.params(":id"));
+			res.redirect("/");
+			return null;
+		});
 
 		// プロジェクトの画面を表示する。パラメータはプロジェクトid
 		get("/project/:id", (req, res) -> {

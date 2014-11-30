@@ -1,7 +1,5 @@
 <h1>Add New</h1>
 
-<%= form_for @project do |f| %>
-
 <form action="/project/create" method="post">
     <p>
         <label>Title</label><br/>
@@ -12,16 +10,3 @@
     </p> 
 </form>
 
-<p>
-  <%= f.label :title %><br>
-  <%= f.text_field :title %>
-  <% if @project.errors.any? %>
-  <%= @project.errors.messages[:title][0] %>
-  <% end %>
-</p>
-
-<p>
-  <%= f.submit %>
-</p>
-
-<% end %>

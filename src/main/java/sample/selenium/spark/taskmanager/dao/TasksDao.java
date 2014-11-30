@@ -63,8 +63,21 @@ public class TasksDao extends AbstractDao {
 		} finally {
 			dbConnectionManager.close();
 		}
-		//FIXME queryRunnerの返り値をチェックした方がよいかも
+		// FIXME queryRunnerの返り値をチェックした方がよいかも
 
+	}
+
+	public void deleteByProjectId(String projectId) {
+		QueryRunner queryRunner = new QueryRunner();
+
+		try {
+			queryRunner.update(dbConnectionManager.open(),
+					"delete from tasks where project_id = ?", projectId);
+		} catch (SQLException | DBConnectionManagerException e) {
+			e.printStackTrace();
+		} finally {
+			dbConnectionManager.close();
+		}
 	}
 
 }

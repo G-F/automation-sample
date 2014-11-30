@@ -80,4 +80,18 @@ public class ProjectsDao extends AbstractDao {
 		}
 
 	}
+
+	public void deleteById(String id) {
+		QueryRunner queryRunner = new QueryRunner();
+
+		try {
+			queryRunner.update(dbConnectionManager.open(),
+					"delete from projects where id = ?", id);
+		} catch (SQLException | DBConnectionManagerException e) {
+			e.printStackTrace();
+		} finally{
+			dbConnectionManager.close();
+		}
+
+	}
 }
