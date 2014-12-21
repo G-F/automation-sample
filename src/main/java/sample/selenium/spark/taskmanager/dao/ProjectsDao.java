@@ -1,5 +1,6 @@
 package sample.selenium.spark.taskmanager.dao;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ProjectsDao extends AbstractDao {
 			list = queryRunner.query(dbConnectionManager.open(),
 					"select * from projects", new BeanListHandler<Project>(
 							Project.class));
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -42,7 +43,7 @@ public class ProjectsDao extends AbstractDao {
 			result = queryRunner.query(dbConnectionManager.open(),
 					"select * from projects where id = ?",
 					new BeanHandler<Project>(Project.class), id);
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			dbConnectionManager.close();
@@ -58,7 +59,7 @@ public class ProjectsDao extends AbstractDao {
 		try {
 			queryRunner.update(dbConnectionManager.open(),
 					"insert into projects(title) values(?)", title);
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			dbConnectionManager.close();
@@ -73,7 +74,7 @@ public class ProjectsDao extends AbstractDao {
 		try {
 			queryRunner.update(dbConnectionManager.open(),
 					"update projects set title = ? where id = ?", title, id);
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			dbConnectionManager.close();
@@ -87,7 +88,7 @@ public class ProjectsDao extends AbstractDao {
 		try {
 			queryRunner.update(dbConnectionManager.open(),
 					"delete from projects where id = ?", id);
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			e.printStackTrace();
 		} finally{
 			dbConnectionManager.close();

@@ -1,10 +1,19 @@
 package sample.selenium.dbutils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnectionManager {
+
+	private static DBConnectionManager instance = new DBConnectionManager();
+	private Connection con;
+	private Properties properties = new Properties();
 
 	public class DBConnectionManagerException extends Exception {
 		/**
@@ -13,9 +22,6 @@ public class DBConnectionManager {
 		private static final long serialVersionUID = -4561233446946462138L;
 
 	}
-
-	private static DBConnectionManager instance = new DBConnectionManager();
-	private Connection con;
 
 	// private DBConnectionManager() {
 	// String dbpass =
@@ -40,7 +46,7 @@ public class DBConnectionManager {
 		return con;
 	}
 
-	public Connection open() throws DBConnectionManagerException {
+	public Connection open() throws DBConnectionManagerException, IOException {
 
 		int count = 0;
 		while (con != null) {
@@ -54,7 +60,14 @@ public class DBConnectionManager {
 			}
 		}
 
+		try (InputStream inputStream = new FileInputStream(
+				new File("taskmanager.properties"))) {
+			properties.load(inputStream);
+		}
+
 		String dbpass = "jdbc:sqlite:C:\\Users\\masao\\Documents\\WORKSPACE\\workspace_selenium_sample\\task.sqlite3";
+		dbpass = properties.getProperty("dbpass");
+		System.out.println(dbpass);
 		try {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(dbpass);

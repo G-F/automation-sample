@@ -43,7 +43,8 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>HelloWorld</mainClass>
+							<mainClass>sample.selenium.spark.taskmanager.SampleTaskManager</mainClass>
+							<packageName>sample.selenium.spark.taskmanager</packageName>
 							<addClasspath>true</addClasspath>
 							<addExtensions>true</addExtensions>
 							<classpathPrefix>dependency</classpathPrefix>

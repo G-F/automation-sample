@@ -1,5 +1,6 @@
 package sample.selenium.spark.taskmanager.dao;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class TasksDao extends AbstractDao {
 					"select * from tasks where project_id = ?",
 					new BeanListHandler<Task>(Task.class), projectId);
 			dbConnectionManager.close();
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -38,7 +39,7 @@ public class TasksDao extends AbstractDao {
 							task.getTitle(), task.getProject_id(), task
 									.getCreated_at().getTime(), task
 									.getUpdated_at());
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -58,7 +59,7 @@ public class TasksDao extends AbstractDao {
 		try {
 			queryRunner.update(dbConnectionManager.open(),
 					"delete from tasks where id = ? ", taskID);
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			dbConnectionManager.close();
@@ -73,7 +74,7 @@ public class TasksDao extends AbstractDao {
 		try {
 			queryRunner.update(dbConnectionManager.open(),
 					"delete from tasks where project_id = ?", projectId);
-		} catch (SQLException | DBConnectionManagerException e) {
+		} catch (SQLException | DBConnectionManagerException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			dbConnectionManager.close();
