@@ -5,7 +5,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "https://github.com/G-F/automation-sample/releases/download/ver0.1/centos_sampleapp.box"
-# config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.box = "auto_sample_app"
+  config.vm.box_url = "https://github.com/G-F/automation-sample/releases/download/ver0.1/centos_sampleapp.box"
+  config.vm.network :forwarded_port, host: 4567, guest: 4567
   config.vm.provision :shell, :path => "startup.sh"
 end
