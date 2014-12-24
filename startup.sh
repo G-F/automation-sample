@@ -4,6 +4,8 @@ export M3_HOME=/opt/apache-maven-3.2.3
 M3=$M3_HOME/bin
 export PATH=$M3:$PATH
 
+cd /vagrant
+
 mvn install package -Dtest.skip=true
 mvn dependency:copy-dependencies
 
