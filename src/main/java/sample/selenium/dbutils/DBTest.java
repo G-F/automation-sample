@@ -9,7 +9,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import sample.selenium.spark.taskmanager.model.Project;
 
@@ -23,10 +22,8 @@ public class DBTest {
 //			Class.forName("org.sqlite.JDBC");
 //			temp = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\masao\\Documents\\WORKSPACE\\workspace_selenium_sample\\example");
 //		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 
