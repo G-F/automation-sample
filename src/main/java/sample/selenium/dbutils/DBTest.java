@@ -16,24 +16,13 @@ public class DBTest {
 	
 	public static void main(String[] args) {
 		new DBTest().connectTest("example");
-		
-//		Connection temp;
-//		try {
-//			Class.forName("org.sqlite.JDBC");
-//			temp = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\masao\\Documents\\WORKSPACE\\workspace_selenium_sample\\example");
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-
 	}
 	public Connection con = null;
 
 	public void connectTest(String dbpass) {
 		if (dbpass.equals("example")) {
 			dbpass = "jdbc:sqlite:C:\\Users\\masao\\Documents\\WORKSPACE\\workspace_selenium_sample\\example";
-			System.out.println("ƒeƒXƒgDB");
+			System.out.println("ãƒ†ã‚¹ãƒˆDB");
 		} else {
 			dbpass = "jdbc:sqlite:C:\\Users\\masao\\Documents\\WORKSPACE\\workspace_selenium_sample\\task.sqlite3";
 		}
@@ -49,7 +38,6 @@ public class DBTest {
 		}
 
 		QueryRunner queryRunner = new QueryRunner();
-		//List<Project> list = null;
 		Project project = null;
 		try {
 			project = queryRunner.query(con,
@@ -62,23 +50,6 @@ public class DBTest {
 		}
 
 		System.out.println(project);
-		// for (Project project : list) {
-		// System.out.println(project.getTitle());
-		// }
-
-		// QueryRunner queryRunner = new QueryRunner();
-//		ResultSetHandler<List<Object[]>> handler = new ArrayListHandler();
-//		List<Object[]> result = null;
-//		try {
-//			result = queryRunner.query(con, "select * from projects", handler);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		for (Object[] obj : result) {
-//			System.out.println(obj[0]);
-//		}
 	}
 
 }
